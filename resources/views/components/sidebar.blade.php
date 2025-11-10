@@ -44,6 +44,24 @@
         </a>
     </li>
 
+     <!-- Nav Item - Produk -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route('gambar.index')}}"
+            aria-expanded="true" aria-controls="collapseTwo">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>Gambar</span>
+        </a>
+    </li>
+
+        <!-- Nav Item - Produk -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="{{ route('harga.index')}}"
+            aria-expanded="true" aria-controls="collapseTwo">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>Harga</span>
+        </a>
+    </li>
+
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
