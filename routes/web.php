@@ -1,4 +1,4 @@
-<<?php
+<?php
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -11,8 +11,8 @@ use App\Http\Controllers\HargaController;
 use App\Http\Controllers\GambarController;
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('site.index');
+})->name('home');
 
 Route::resource('/dashboard', HomeController::class);
 Route::resource('produk', ProdukController::class);
