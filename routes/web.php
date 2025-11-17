@@ -16,7 +16,6 @@ Route::get('/', function () {
     return view('site.index');
 })->name('home');
 
-<<<<<<< Updated upstream
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
     Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
@@ -25,7 +24,7 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/cart', function () {
     return view('cart.index');
 })->name('cart.index');
-=======
+
 Route::get('/produk/detail', function () {
     return view('produk.detail');
 })->name('produk.detail');
@@ -34,7 +33,6 @@ Route::get('/checkout', function () {
     return view('checkout.index');
 })->name('checkout.index');
 
->>>>>>> Stashed changes
 
 
 // Tampilan & CRUD Admin
