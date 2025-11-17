@@ -50,19 +50,112 @@
     <p class="mt-2 text-lg mb-6">Belanja produk favoritmu dengan mudah & cepat</p>
 
     {{-- Slider Gambar --}}
-    <div class="relative w-full max-w-3xl mx-auto overflow-hidden rounded-lg shadow-lg mb-6">
-        <div id="slider" class="flex transition-transform duration-700">
-            <img src="https://via.placeholder.com/900x300/2563EB/FFFFFF?text=Promo+1" class="w-full flex-shrink-0">
-            <img src="https://via.placeholder.com/900x300/059669/FFFFFF?text=Promo+2" class="w-full flex-shrink-0">
-            <img src="https://via.placeholder.com/900x300/DC2626/FFFFFF?text=Promo+3" class="w-full flex-shrink-0">
-        </div>
-        <!-- Tombol Navigasi -->
-        <button onclick="prevSlide()" class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white text-blue-600 px-2 py-1 rounded-full shadow">‹</button>
-        <button onclick="nextSlide()" class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white text-blue-600 px-2 py-1 rounded-full shadow">›</button>
+   <style>
+    body {
+        margin: 0;
+        padding: 0;
+        background: #0d6efd; /* FULL BIRU */
+        font-family: Arial, sans-serif;
+    }
+
+    .slider-container {
+        width: 100%;
+        max-width: 2000px;
+        margin: 50px auto;
+        position: relative;
+        overflow: hidden;
+        border-radius: 12px;
+        background: rgba(255,255,255,0.2);
+        padding: 10px;
+    }
+
+    .slider {
+        display: flex;
+        width: 100%;
+        length: 200%;
+        transition: transform 0.5s ease-in-out;
+    }
+
+    .slide {
+        min-width: 100%;
+    }
+
+    .slide img {
+        width: 100%;
+        border-radius: 12px;
+    }
+
+    /* Tombol navigasi */
+    .nav-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: white;
+        color: #0d6efd;
+        border: none;
+        font-size: 30px;
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        cursor: pointer;
+        box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+
+    .nav-btn:hover {
+        background: #e3e3e3;
+    }
+
+    .prev {
+        left: 10px;
+    }
+
+    .next {
+        right: 10px;
+    }
+</style>
+</head>
+<body>
+
+<div class="slider-container">
+    <div class="slider" id="slider">
+        <div class="slide"><img src="https://picsum.photos/1100/400?random=1"></div>
+        <div class="slide"><img src="https://picsum.photos/1100/400?random=2"></div>
+        <div class="slide"><img src="https://picsum.photos/1100/400?random=3"></div>
     </div>
+
+    <!-- Tombol Navigasi Berfungsi -->
+    <button class="nav-btn prev" onclick="prevSlide()">‹</button>
+    <button class="nav-btn next" onclick="nextSlide()">›</button>
+</div>
+
+<script>
+let index = 0;
+const slider = document.getElementById("slider");
+const totalSlides = slider.children.length;
+
+function showSlide() {
+    slider.style.transform = "translateX(" + (-index * 100) + "%)";
+}
+
+function nextSlide() {
+    index = (index + 1) % totalSlides;
+    showSlide();
+}
+
+function prevSlide() {
+    index = (index - 1 + totalSlides) % totalSlides;
+    showSlide();
+}
+
+// Auto slide
+setInterval(nextSlide, 4000);
+</script>
+
 
     <a href="#produk" class="inline-block px-6 py-3 bg-white text-blue-600 font-semibold rounded-lg shadow hover:bg-gray-100">Belanja Sekarang</a>
 </section>
+
+
 
 {{-- Search Produk --}}
 <div class="container mx-auto px-4 mt-8">
