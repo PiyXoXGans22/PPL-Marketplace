@@ -9,10 +9,38 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    // === LOGIN ===
     public function showLoginForm()
     {
         return view('auth.login');
+    }
+
+    public function showRegisterForm()
+    {
+        return view('auth.register');
+    }
+
+    public function register(Request $request)
+    {
+        $request->validate([
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'username' => 'required|unique:login',
+            'email' => 'required|email|unique:login',
+            'phone' => 'required',
+            'password' => 'required|min:4|confirmed',
+        ]);
+
+        $user = Login::create([
+            'first_name' => $request->first_name,
+            'last_name'  => $request->last_name,
+            'username'   => $request->username,
+            'email'      => $request->email,
+            'phone'      => $request->phone,
+            'password'   => Hash::make($request->password),
+        ]);
+
+        Auth::login($user);
+        return redirect('/dashboard');
     }
 
     public function login(Request $request)
@@ -22,48 +50,14 @@ class AuthController extends Controller
             'password' => ['required'],
         ]);
 
-        if (Auth::attempt($credentials, $request->boolean('remember'))) {
+        if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended('/dashboard');
+            return redirect('/dashboard');
         }
 
-        return back()->withErrors([
-            'email' => 'Email atau password salah.',
-        ])->onlyInput('email');
+        return back()->withErrors(['email' => 'Email atau password salah']);
     }
 
-    // === REGISTER ===
-    public function showRegisterForm()
-    {
-        return view('auth.register');
-    }
-
-    public function register(Request $request)
-    {
-        $validated = $request->validate([
-            'first_name' => 'required|string|max:30',
-            'last_name'  => 'required|string|max:30',
-            'username'   => 'required|string|max:30|unique:login,username',
-            'email'      => 'required|email|max:100|unique:login,email',
-            'phone'      => 'required|string|max:12',
-            'password'   => 'required|string|min:6|confirmed',
-        ]);
-
-        $user = Login::create([
-            'first_name' => $validated['first_name'],
-            'last_name'  => $validated['last_name'],
-            'username'   => $validated['username'],
-            'email'      => $validated['email'],
-            'phone'      => $validated['phone'],
-            'password'   => Hash::make($validated['password']),
-        ]);
-
-        Auth::login($user);
-
-        return redirect('/dashboard');
-    }
-
-    // === LOGOUT ===
     public function logout(Request $request)
     {
         Auth::logout();

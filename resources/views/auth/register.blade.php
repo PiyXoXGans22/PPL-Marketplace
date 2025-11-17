@@ -147,13 +147,14 @@
     <div class="register-box">
       <h2>Register</h2>
 
-      <form action="{{ route('register') }}" method="POST">
+      <form action="{{ route('register.process') }}" method="POST">
         @csrf
 
         <input type="text" name="first_name" placeholder="Nama Depan" required>
         <input type="text" name="last_name" placeholder="Nama Belakang" required>
         <input type="text" name="username" placeholder="Nama Pengguna" required>
         <input type="email" name="email" placeholder="Email Address" required>
+        <input type="text" name="phone" placeholder="Nomor Telepon" required>
         <input type="password" name="password" placeholder="Password" required>
         <input type="password" name="password_confirmation" placeholder="Confirm Password" required>
 
