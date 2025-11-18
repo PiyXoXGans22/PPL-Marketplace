@@ -17,7 +17,7 @@ Route::get('/', function () {
     return view('site.index');
 })->name('home');
 
-<<<<<<< Updated upstream
+
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
@@ -28,8 +28,6 @@ Route::get('/cart', function () {
     return view('cart.index');
 })->name('cart.index');
 
-=======
->>>>>>> Stashed changes
 Route::get('/produk/detail', function () {
     return view('produk.detail');
 })->name('produk.detail');
@@ -40,10 +38,7 @@ Route::get('/checkout', function () {
 
 
 
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
 // Tampilan & CRUD Admin
 Route::get('/dashboard', function () {
     return view('home');
@@ -63,6 +58,7 @@ Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('regi
 Route::get('/register', [RegisterController::class, 'showRegisterForm'])->name('register');
 Route::post('/register/process', [RegisterController::class, 'register'])->name('register.process');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
 Route::middleware(['admin'])->group(function () {
     Route::get('/dashboard', function () {
         return view('home');
@@ -73,5 +69,4 @@ Route::middleware(['user'])->group(function () {
         return view('site.index');
     });
 });
-
 

@@ -169,6 +169,8 @@
                     <p style="margin-top:15px; font-size:14px; text-align:center;">
                         Belum punya akun?
                         <a href="{{ route('register') }}" style="color:#2d70ee; font-weight:bold;">Daftar</a>
+                        <a href="http://localhost/register">Daftar</a>
+
                     </p>
                 </div>
             </div>
