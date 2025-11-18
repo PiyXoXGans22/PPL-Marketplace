@@ -13,4 +13,10 @@ class Role extends Model
         'name',
         'description'
     ];
+
+    // RELASI ROLE → USER
+    public function users()
+    {
+        return $this->hasMany(User::class, 'role_id');
+    }
 }

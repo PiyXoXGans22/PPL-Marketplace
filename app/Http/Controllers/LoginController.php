@@ -14,45 +14,30 @@ class LoginController extends Controller
         return view('auth.login');
     }
 
-    public function login(Request $request)
+    public function loginProcess(Request $request)
     {
         $request->validate([
             'email' => 'required',
             'password' => 'required',
         ]);
 
-        $user = Login::where('email', $request->email)->first();
+        $user = User::where('email', $request->email)->first();
 
         if ($user && Hash::check($request->password, $user->password)) {
             Auth::login($user);
-            return redirect('/dashboard');
+
+            if ($user->role_id == 1) {
+                return redirect('/dashboard'); // admin
+            }
+            if ($user->role_id == 3) {
+                return redirect('/'); // user
+            }
         }
 
-        return back()->withErrors(['email' => 'Email atau password salah.']);
+        return back()->withErrors([
+            'email' => 'Email atau password salah.'
+        ]);
     }
-    public function loginProcess(Request $request)
-{
-    $credentials = $request->only('email', 'password');
-
-    if (Auth::attempt($credentials)) {
-
-        $request->session()->regenerate();
-
-        // Redirect berdasarkan role
-        if (Auth::user()->role_id == 1) {
-            return redirect('/dashboard'); // admin
-        }
-
-        if (Auth::user()->role_id == 3) {
-            return redirect('/'); // user
-        }
-    }
-
-    return back()->withErrors([
-        'email' => 'Email atau password salah.',
-    ]);
-}
-
 
     public function logout(Request $request)
     {

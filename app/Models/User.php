@@ -7,9 +7,10 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    protected $table = 'login';  
+    protected $primaryKey = 'id';
 
-    protected $table = 'login'; // <--- Tambah ini
+    public $timestamps = false;
 
     protected $fillable = [
         'first_name',
@@ -18,6 +19,7 @@ class User extends Authenticatable
         'email',
         'phone',
         'password',
+        'role_id'
     ];
 
     protected $hidden = [
