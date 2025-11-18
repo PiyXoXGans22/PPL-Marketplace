@@ -4,48 +4,54 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Qty;
+use App\Models\Produk;
 
 class QtyController extends Controller
 {
-    // Menampilkan semua data qty
+    // Tampilkan semua qty
     public function index()
     {
-        $qty = Qty::all();
+        $qty = Qty::with('barang')->get();
         return view('qty.index', compact('qty'));
     }
 
-    // Menampilkan form tambah qty
+    // Form tambah qty
     public function create()
     {
-        return view('qty.create');
+        // pilih produk yang belum punya qty
+        $produk = Produk::doesntHave('stok')->get();
+
+        return view('qty.create', compact('produk'));
     }
 
-    // Menyimpan qty baru
+    // Simpan qty baru
     public function store(Request $request)
     {
         $request->validate([
-            'qty' => 'required|integer',
+            'id_prod' => 'required|exists:produk,id|unique:qty,id_prod',
+            'qty'     => 'required|integer|min:0',
         ]);
 
         Qty::create([
-            'qty' => $request->qty,
+            'id_prod' => $request->id_prod,
+            'qty'     => $request->qty,
         ]);
 
-        return redirect()->route('qty.index')->with('success', 'Data qty berhasil ditambahkan!');
+        return redirect()->route('qty.index')->with('success', 'Qty berhasil ditambahkan!');
     }
 
-    // Menampilkan form edit qty
+    // Form edit qty
     public function edit($id)
     {
         $qty = Qty::findOrFail($id);
         return view('qty.edit', compact('qty'));
     }
 
-    // Memperbarui data qty
+    // Update qty
     public function update(Request $request, $id)
     {
         $request->validate([
-            'qty' => 'required|integer',
+            'qty' => 'required|integer|min:0',
         ]);
 
         $qty = Qty::findOrFail($id);
@@ -53,15 +59,14 @@ class QtyController extends Controller
             'qty' => $request->qty,
         ]);
 
-        return redirect()->route('qty.index')->with('success', 'Data qty berhasil diperbarui!');
+        return redirect()->route('qty.index')->with('success', 'Qty berhasil diperbarui!');
     }
 
-    // Menghapus data qty
+    // Hapus qty
     public function destroy($id)
     {
-        $qty = Qty::findOrFail($id);
-        $qty->delete();
+        Qty::destroy($id);
 
-        return redirect()->route('qty.index')->with('success', 'Data qty berhasil dihapus!');
+        return redirect()->route('qty.index')->with('success', 'Qty berhasil dihapus!');
     }
 }

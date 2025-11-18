@@ -4,44 +4,50 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Kategori;
+use App\Models\Produk;
 
 class KategoriController extends Controller
 {
-    // Menampilkan semua data kategori
+    // Menampilkan daftar kategori
     public function index()
     {
-        $kategori = Kategori::all();
+        $kategori = Kategori::with('barang')->get();
         return view('kategori.index', compact('kategori'));
     }
 
-    // Menampilkan form tambah data
+    // Menampilkan form tambah kategori
     public function create()
     {
-        return view('kategori.create');
+        // Produk yang belum punya kategori
+        $produk = Produk::doesntHave('kategori')->get();
+
+        return view('kategori.create', compact('produk'));
     }
 
-    // Menyimpan data baru
+    // Menyimpan kategori baru
     public function store(Request $request)
     {
         $request->validate([
-            'kategori' => 'required|string|max:100',
+            'id_prod'   => 'required|exists:produk,id|unique:kategori,id_prod',
+            'kategori'  => 'required|string|max:100',
         ]);
 
         Kategori::create([
+            'id_prod'  => $request->id_prod,
             'kategori' => $request->kategori,
         ]);
 
         return redirect()->route('kategori.index')->with('success', 'Kategori berhasil ditambahkan!');
     }
 
-    // Menampilkan form edit data
+    // Menampilkan form edit kategori
     public function edit($id)
     {
         $kategori = Kategori::findOrFail($id);
         return view('kategori.edit', compact('kategori'));
     }
 
-    // Memperbarui data
+    // Update kategori
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -56,12 +62,10 @@ class KategoriController extends Controller
         return redirect()->route('kategori.index')->with('success', 'Kategori berhasil diperbarui!');
     }
 
-    // Menghapus data
+    // Hapus kategori
     public function destroy($id)
     {
-        $kategori = Kategori::findOrFail($id);
-        $kategori->delete();
-
+        Kategori::destroy($id);
         return redirect()->route('kategori.index')->with('success', 'Kategori berhasil dihapus!');
     }
 }

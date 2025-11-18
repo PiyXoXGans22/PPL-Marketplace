@@ -9,11 +9,18 @@ class Qty extends Model
 {
     use HasFactory;
 
-    protected $table = 'qty';         // nama tabel di database
-    protected $primaryKey = 'id_prod'; // primary key
-    public $timestamps = false;        // tidak ada created_at / updated_at
+    protected $table = 'qty';
+    protected $primaryKey = 'id_prod';
+    public $incrementing = false;       // id_prod diisi manual
+    public $timestamps = false;
 
     protected $fillable = [
+        'id_prod',
         'qty',
     ];
+
+    public function barang()
+    {
+        return $this->belongsTo(Produk::class, 'id_prod');
+    }
 }

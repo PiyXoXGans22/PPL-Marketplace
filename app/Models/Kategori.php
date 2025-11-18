@@ -9,11 +9,18 @@ class Kategori extends Model
 {
     use HasFactory;
 
-    protected $table = 'kategori';       // nama tabel
-    protected $primaryKey = 'id_prod';   // primary key
-    public $timestamps = false;          // tidak ada kolom created_at/updated_at
+    protected $table = 'kategori';
+    protected $primaryKey = 'id_prod';
+    public $incrementing = false;    // WAJIB karena id_prod bukan auto increment
+    public $timestamps = false;
 
     protected $fillable = [
+        'id_prod',
         'kategori',
     ];
+
+    public function barang()
+    {
+        return $this->belongsTo(Produk::class, 'id_prod', 'id');
+    }
 }

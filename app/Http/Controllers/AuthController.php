@@ -9,16 +9,25 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+    // ==============================
+    // SHOW LOGIN FORM
+    // ==============================
     public function showLoginForm()
     {
         return view('auth.login');
     }
 
+    // ==============================
+    // SHOW REGISTER FORM
+    // ==============================
     public function showRegisterForm()
     {
         return view('auth.register');
     }
 
+    // ==============================
+    // REGISTER USER
+    // ==============================
     public function register(Request $request)
     {
         $request->validate([
@@ -26,11 +35,11 @@ class AuthController extends Controller
             'last_name'  => 'required|string|max:30',
             'username'   => 'required|string|max:30|unique:login,username',
             'email'      => 'required|email|unique:login,email',
-            'phone'      => 'required',
-            'password'   => 'required|min:4|confirmed',
+            'phone'      => 'required|string|max:12',
+            'password'   => 'required|string|min:4|confirmed',
         ]);
 
-        // insert ke tabel login melalui model User
+        // Insert ke tabel login melalui Model User
         $user = User::create([
             'first_name' => $request->first_name,
             'last_name'  => $request->last_name,
@@ -38,32 +47,42 @@ class AuthController extends Controller
             'email'      => $request->email,
             'phone'      => $request->phone,
             'password'   => Hash::make($request->password),
-            'role_id'    => 3, // default user
+            'role_id'    => 3, // Default role user
         ]);
 
+        // Login otomatis
         Auth::login($user);
 
-        return redirect('/home');
+        return redirect()->route('home')->with('success', 'Akun berhasil dibuat!');
     }
 
+    // ==============================
+    // LOGIN USER
+    // ==============================
     public function login(Request $request)
     {
         $credentials = $request->validate([
-            'email' => ['required', 'email'],
+            'email'    => ['required', 'email'],
             'password' => ['required'],
         ]);
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect('/home');
+            return redirect()->route('home');
         }
 
-        return back()->withErrors(['email' => 'Email atau password salah']);
+        return back()->withErrors([
+            'email' => 'Email atau password salah',
+        ]);
     }
 
+    // ==============================
+    // LOGOUT USER
+    // ==============================
     public function logout(Request $request)
     {
         Auth::logout();
+
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 

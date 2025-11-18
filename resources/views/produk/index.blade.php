@@ -22,12 +22,16 @@
     <div class="card shadow">
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered">
+                <table class="table table-bordered table-striped">
                     <thead class="thead-dark">
                         <tr>
                             <th>ID</th>
                             <th>Nama Produk</th>
                             <th>Deskripsi</th>
+                            <th>Kategori</th>
+                            <th>Qty</th>
+                            <th>Harga</th>
+                            <th>Gambar</th>
                             <th width="150px">Aksi</th>
                         </tr>
                     </thead>
@@ -38,10 +42,33 @@
                             <td>{{ $p->id }}</td>
                             <td>{{ $p->nama_produk }}</td>
                             <td>{{ $p->deskripsi }}</td>
+
+                            {{-- kategori --}}
                             <td>
-                                <a href="{{ route('produk.edit', $p->id) }}" class="btn btn-warning btn-sm">
-                                    Edit
-                                </a>
+                                {{ $p->kategori->kategori ?? '-' }}
+                            </td>
+
+                            {{-- qty --}}
+                            <td>
+                                {{ $p->stok->qty ?? 0 }}
+                            </td>
+
+                            {{-- harga --}}
+                            <td>
+                                {{ $p->harga->harga ?? '-' }}
+                            </td>
+
+                            {{-- gambar --}}
+                            <td>
+                                @if($p->gambar && $p->gambar->gambar)
+                                    <img src="{{ asset($p->gambar->gambar) }}" width="60">
+                                @else
+                                    <span class="text-muted">Tidak ada</span>
+                                @endif
+                            </td>
+
+                            <td>
+                                <a href="{{ route('produk.edit', $p->id) }}" class="btn btn-warning btn-sm">Edit</a>
 
                                 <form action="{{ route('produk.destroy', $p->id) }}" method="POST" class="d-inline">
                                     @csrf

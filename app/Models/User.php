@@ -7,10 +7,12 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    protected $table = 'login';  
+    use Notifiable;
+
+    protected $table = 'login';
     protected $primaryKey = 'id';
 
-    public $timestamps = false;
+    public $timestamps = false;  // tabel login tidak punya created_at & updated_at
 
     protected $fillable = [
         'first_name',
@@ -19,10 +21,18 @@ class User extends Authenticatable
         'email',
         'phone',
         'password',
-        'role_id'
+        'role_id',
+        'remember_token'
     ];
 
     protected $hidden = [
         'password',
+        'remember_token'
     ];
+
+    // RELASI USER → ROLE
+    public function role()
+    {
+        return $this->belongsTo(Role::class, 'role_id');
+    }
 }
