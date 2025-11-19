@@ -146,6 +146,13 @@
   <div class="right">
     <div class="register-box">
       <h2>Register</h2>
+      @if ($errors->any())
+      <div style="color:red; text-align:center; margin-bottom: 15px;">
+          @foreach ($errors->all() as $error)
+              <div>{{ $error }}</div>
+          @endforeach
+      </div>
+  @endif
 
       <form action="{{ route('register.process') }}" method="POST">
         @csrf
