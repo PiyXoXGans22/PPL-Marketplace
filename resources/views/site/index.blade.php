@@ -370,15 +370,15 @@
 <main class="container mx-auto px-4 py-12" id="produk">
     <h3 class="text-2xl font-bold mb-6">Produk Terbaru</h3>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-0">
 
         @forelse ($produk as $item)
-        <div class="bg-white shadow rounded-lg overflow-hidden hover:shadow-lg transition">
+        <div class="bg-white shadow rounded-lg overflow-hidden hover:shadow-lg transition" style="width: 300px;">
 
             {{-- GAMBAR PRODUK --}}
-            <img src="{{ $item->gambar ?? 'https://via.placeholder.com/300x200' }}"
-                 alt="{{ $item->nama_produk }}"
-                 class="w-full h-40 object-cover">
+            <img src="{{ $item->gambar ? asset($item->gambar->gambar) : 'https://via.placeholder.com/300x200' }}"
+     class="w-full h-60 object-cover">
+
 
             <div class="p-4">
                 {{-- NAMA PRODUK --}}
