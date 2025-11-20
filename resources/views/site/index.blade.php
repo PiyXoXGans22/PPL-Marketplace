@@ -44,160 +44,319 @@
     });
 </script>
 
-{{-- Hero Section --}}
-{{-- <section class="bg-blue-600 text-white py-12 text-center relative">
-    <h2 class="text-3xl font-bold mb-2">Selamat Datang di E-Blox Store</h2>
-    <p class="mt-2 text-lg mb-6">Belanja produk favoritmu dengan mudah & cepat</p> --}}
+{{-- Hero Banner Slider --}}
+<section style="padding: 40px 0;">
 
-    {{-- Hero Banner Slider (TOKOPEDIA STYLE) --}}
-    <section class="py-10">
+    <style>
+    .banner-slider {
+        position: relative;
+        width: 100%;
+        max-width: 1200px;
+        margin: auto;
+        overflow: hidden;
+        border-radius: 18px;
+    }
+    .banner-track {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+    }
+    .banner-slide {
+    min-width: 100%;
+    height: 380px; /* BESAR & PROPORISONAL */
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 50px;
+    position: relative;
+    }
 
-        <style>
-            .banner-slider {
-                position: relative;
-                width: 100%;
-                max-width: 1200px;
-                margin: auto;
-                overflow: hidden;
-                border-radius: 18px;
-            }
-            .banner-track {
-                display: flex;
-                transition: transform 0.5s ease-in-out;
-            }
-            .banner-slide {
-                min-width: 100%;
-                background: #ffefbf; /* warna kuning soft tokopedia */
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding: 40px;
-            }
-            .banner-left h2 {
-                font-size: 32px;
-                font-weight: 800;
-                color: #000;
-            }
-            .banner-left p {
-                font-size: 22px;
-                font-weight: 600;
-                color: #333;
-                line-height: 1.3;
-            }
-            .banner-left span {
-                font-size: 42px;
-                font-weight: 900;
-                color: #000;
-            }
-            .banner-right img {
-                width: 260px;
-                height: auto;
-            }
-            .banner-nav {
-                position: absolute;
-                bottom: 15px;
-                left: 50%;
-                transform: translateX(-50%);
-                display: flex;
-                gap: 8px;
-            }
-            .dot {
-                width: 10px;
-                height: 10px;
-                background: #ccc;
-                border-radius: 50%;
-                transition: 0.3s;
-            }
-            .dot.active {
-                background: #1abc60;
-            }
-        </style>
+    .banner-left h2 {
+        font-size: 32px;
+        font-weight: 800;
+    }
+    .banner-left p {
+        font-size: 22px;
+        font-weight: 600;
+        line-height: 1.3;
+    }
+    .banner-left span {
+        font-size: 42px;
+        font-weight: 900;
+    }
+    .banner-right img {
+        width: 260px;
+        height: auto;
+    }
 
-        <div class="banner-slider">
-            <div id="bannerTrack" class="banner-track">
+    /* DOT */
+    .banner-nav {
+        position: absolute;
+        bottom: 15px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 8px;
+    }
+    .dot {
+        width: 12px;
+        height: 12px;
+        background: #ccc;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    .dot.active {
+        background: #1abc60;
+    }
 
-                {{-- SLIDE 1 --}}
-                <div class="banner-slide">
-                    <div class="banner-left">
-                        <h2>NYAM!</h2>
-                        <p>Belanja Bulanan Hemat <br>
-                            Diskon s.d. <span>50%</span>
-                        </p>
-                    </div>
-                    <div class="banner-right">
-                        <img src="https://i.ibb.co/0fSzF5F/muesli.png" alt="Produk 1">
-                    </div>
-                </div>
+    /* PANAH */
+    .arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        padding: 12px 16px;
+        font-size: 22px;
+        cursor: pointer;
+        background: rgba(0,0,0,0.3);
+        color: white;
+        border-radius: 50%;
+        user-select: none;
+    }
+    .arrow:hover {
+        background: rgba(0,0,0,0.5);
+    }
+    .arrow-left { left: 15px; }
+    .arrow-right { right: 15px; }
 
-                {{-- SLIDE 2 --}}
-                <div class="banner-slide">
-                    <div class="banner-left">
-                        <h2>Promo Spesial</h2>
-                        <p>Dapatkan Produk Terbaik <br>
-                            Mulai dari <span>Rp 10Rb</span>
-                        </p>
-                    </div>
-                    <div class="banner-right">
-                        <img src="https://i.ibb.co/ZV3BsCS/snack.png" alt="Produk 2">
-                    </div>
-                </div>
+   /* ===== BACKGROUND SLIDE 1 ===== */
+.banner-bg-1 {
+    position: relative;
+    background-image: url('{{ asset("uploads/buku.jpg") }}');
+    background-size: cover;
+    background-position: center;
+    color: white;
+}
 
-                {{-- SLIDE 3 --}}
-                <div class="banner-slide">
-                    <div class="banner-left">
-                        <h2>Belanja Hemat</h2>
-                        <p>Gratis Ongkir <br>
-                            s.d. <span>Rp 20.000</span>
-                        </p>
-                    </div>
-                    <div class="banner-right">
-                        <img src="https://i.ibb.co/6qwWfNH/choco.png" alt="Produk 3">
-                    </div>
-                </div>
+/* ===== BACKGROUND SLIDE 2 ===== */
+.banner-bg-2 {
+    position: relative;
+    background-image: url('{{ asset("uploads/hp.jpg") }}');
+    background-size: cover;
+    background-position: center;
+    color: white;
+}
 
+/* ===== BACKGROUND SLIDE 3 ===== */
+.banner-bg-3 {
+    position: relative;
+    background-image: url('{{ asset("uploads/fashion.jpg") }}');
+    background-size: cover;
+    background-position: center;
+    color: white;
+}
+
+/* Overlay untuk semua background slide */
+.banner-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.1); /* mencerahkan */
+    z-index: 1;
+}
+
+.banner-overlay {
+    background: rgba(0,0,0,0.08);
+}
+
+.banner-left h2,
+.banner-left p,
+.banner-left span {
+    text-shadow: 0 2px 6px rgba(0,0,0,0.55);
+}
+
+
+/* Teks putih pada slide background */
+.banner-bg-1 .banner-left h2,
+.banner-bg-1 .banner-left p,
+.banner-bg-1 .banner-left span,
+.banner-bg-2 .banner-left h2,
+.banner-bg-2 .banner-left p,
+.banner-bg-2 .banner-left span,
+.banner-bg-3 .banner-left h2,
+.banner-bg-3 .banner-left p,
+.banner-bg-3 .banner-left span {
+    color: white !important;
+}
+
+</style>
+
+
+    <div class="banner-slider">
+
+        <!-- Panah -->
+        <div class="arrow arrow-left" onclick="prevBanner()">&#10094;</div>
+        <div class="arrow arrow-right" onclick="nextBanner()">&#10095;</div>
+
+       <div id="bannerTrack" class="banner-track">
+
+            <!-- SLIDE 1 — BOOKS -->
+            <div class="banner-slide banner-bg-1">
+                <div class="banner-overlay"></div>
+
+                {{-- <div class="banner-left" style="position: relative; z-index: 2;">
+                    <h2>Luaskan Wawasanmu!</h2>
+                    <p>Diskon Spesial <br> s.d. <span>90%</span></p>
+                </div> --}}
             </div>
 
-            {{-- DOT NAV --}}
-            <div class="banner-nav">
-                <div class="dot active"></div>
-                <div class="dot"></div>
-                <div class="dot"></div>
+            <!-- SLIDE 2 — ELEKTRONIK (BACKGROUND GAMBAR) -->
+            <div class="banner-slide banner-bg-2">
+                <div class="banner-overlay"></div>
+
+                {{-- <div class="banner-left" style="position: relative; z-index: 2;">
+                    <h2>Elektronik Terbaru</h2>
+                    <p>Harga Mulai <span>Rp 99Rb</span></p>
+                </div> --}}
             </div>
+
+            <!-- SLIDE 3 — PAKAIAN -->
+            <div class="banner-slide banner-bg-3">
+                <div class="banner-overlay"></div>
+
+                <div class="banner-left" style="position: relative; z-index: 2;">
+                    <h2>Fashion Keren</h2>
+                    <p>Promo Menarik <br> Diskon <span>50%</span></p>
+                </div>
+            </div>
+
         </div>
 
-    </section>
+        <!-- DOT -->
+        <div class="banner-nav">
+            <div class="dot active" onclick="goToBanner(0)"></div>
+            <div class="dot" onclick="goToBanner(1)"></div>
+            <div class="dot" onclick="goToBanner(2)"></div>
+        </div>
 
-    <!-- Tombol Navigasi Berfungsi -->
-    <button class="nav-btn prev" onclick="prevSlide()">‹</button>
-    <button class="nav-btn next" onclick="nextSlide()">›</button>
-</div>
+    </div>
+
+</section>
 
 <script>
-let index = 0;
-const slider = document.getElementById("slider");
-const totalSlides = slider.children.length;
+    let bIndex = 0;
+    const track = document.getElementById("bannerTrack");
+    const total = track.children.length;
+    const dots = document.querySelectorAll(".dot");
+    let autoSlide;
 
-function showSlide() {
-    slider.style.transform = "translateX(" + (-index * 100) + "%)";
-}
+    function updateBanner() {
+        track.style.transform = "translateX(" + (-bIndex * 100) + "%)";
+        dots.forEach((d, i) => d.classList.toggle("active", i === bIndex));
+    }
 
-function nextSlide() {
-    index = (index + 1) % totalSlides;
-    showSlide();
-}
+    function nextBanner() {
+        bIndex = (bIndex + 1) % total;
+        updateBanner();
+        resetAutoSlide();
+    }
 
-function prevSlide() {
-    index = (index - 1 + totalSlides) % totalSlides;
-    showSlide();
-}
+    function prevBanner() {
+        bIndex = (bIndex - 1 + total) % total;
+        updateBanner();
+        resetAutoSlide();
+    }
 
-// Auto slide
-setInterval(nextSlide, 4000);
+    function goToBanner(i) {
+        bIndex = i;
+        updateBanner();
+        resetAutoSlide();
+    }
+
+    function resetAutoSlide() {
+        clearInterval(autoSlide);
+        autoSlide = setInterval(nextBanner, 4000);
+    }
+
+    autoSlide = setInterval(nextBanner, 4000);
 </script>
 
 
-    <a href="#produk" class="inline-block px-6 py-3 bg-white text-blue-600 font-semibold rounded-lg shadow hover:bg-gray-100">  </a>
-</section>
+<script>
+    let bIndex = 0;
+    const track = document.getElementById("bannerTrack");
+    const totalBanner = track.children.length;
+    const dots = document.querySelectorAll(".dot");
+
+    function updateBanner() {
+        track.style.transform = "translateX(" + (-bIndex * 100) + "%)";
+        dots.forEach((d, i) => d.classList.toggle("active", i === bIndex));
+    }
+
+    function nextBanner() {
+        bIndex = (bIndex + 1) % totalBanner;
+        updateBanner();
+    }
+
+    setInterval(nextBanner, 4000);
+</script>
+
+
+<script>
+    let bIndex = 0;
+    const track = document.getElementById("bannerTrack");
+    const total = track.children.length;
+    const dots = document.querySelectorAll(".dot");
+    let autoSlide;
+
+    function updateBanner() {
+        track.style.transform = "translateX(" + (-bIndex * 100) + "%)";
+        dots.forEach((d, i) => d.classList.toggle("active", i === bIndex));
+    }
+
+    function nextBanner() {
+        bIndex = (bIndex + 1) % total;
+        updateBanner();
+        resetAutoSlide();
+    }
+
+    function prevBanner() {
+        bIndex = (bIndex - 1 + total) % total;
+        updateBanner();
+        resetAutoSlide();
+    }
+
+    function goToBanner(i) {
+        bIndex = i;
+        updateBanner();
+        resetAutoSlide();
+    }
+
+    function resetAutoSlide() {
+        clearInterval(autoSlide);
+        autoSlide = setInterval(nextBanner, 4000);
+    }
+
+    autoSlide = setInterval(nextBanner, 4000);
+</script>
+
+<script>
+    let bIndex = 0;
+    const track = document.getElementById("bannerTrack");
+    const totalBanner = track.children.length;
+    const dots = document.querySelectorAll(".dot");
+
+    function updateBanner() {
+        track.style.transform = "translateX(" + (-bIndex * 100) + "%)";
+        dots.forEach((d, i) => d.classList.toggle("active", i === bIndex));
+    }
+
+    function nextBanner() {
+        bIndex = (bIndex + 1) % totalBanner;
+        updateBanner();
+    }
+
+    setInterval(nextBanner, 4000);
+</script>
+
 
 {{-- Search Produk --}}
 <div class="container mx-auto px-4 mt-8">
